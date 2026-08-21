@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Orders collection: Allow anyone to create orders (storefront checkout),
+    // and allow reading/updating for order tracking, CRM sync, and admin portals.
+    match /orders/{orderId} {
+      allow read: if true;
+      allow create: if request.resource.data.orderId != null &&
+                       request.resource.data.customer.phone != null &&
+                       request.resource.data.total >= 0;
+      allow update, delete: if true;
+    }
+  }
+}

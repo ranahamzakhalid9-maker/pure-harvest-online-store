@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Customer order placed on the Pure Harvest Organic store, synchronized with central CRM",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "description": "Human readable order reference e.g. #PHO-2026-1234" },
+        "source": { "type": "string", "description": "Origin store identifier (e.g. pure-harvest-web-store)" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "processing", "dispatched", "delivered", "cancelled"] },
+        "customer": {
+          "type": "object",
+          "properties": {
+            "fullName": { "type": "string" },
+            "phone": { "type": "string" },
+            "email": { "type": "string" },
+            "address": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" }
+          },
+          "required": ["fullName", "phone", "address", "city"]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": { "type": "string" },
+              "name": { "type": "string" },
+              "price": { "type": "number" },
+              "quantity": { "type": "number" },
+              "netWeight": { "type": "string" },
+              "image": { "type": "string" }
+            }
+          }
+        },
+        "subtotal": { "type": "number" },
+        "deliveryMethod": { "type": "string" },
+        "deliveryPrice": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "total": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["orderId", "customer", "items", "total", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Incoming orders from customer storefronts and CRM management"
+    }
+  }
+}

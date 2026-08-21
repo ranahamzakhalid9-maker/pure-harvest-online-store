@@ -1,0 +1,6 @@
+{
+  "name": "Pure Harvest Organic",
+  "description": "Premium 100% organic food and natural products e-commerce store.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

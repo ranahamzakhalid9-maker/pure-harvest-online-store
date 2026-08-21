@@ -1,0 +1,12 @@
+{
+  "projectId": "pureharvest-online-store",
+  "appId": "1:1046672974053:web:90ca97216c28fdb84e340c",
+  "apiKey": "AIzaSyAaMDg2P16bFJ2989yRGYG0CfI3992znKA",
+  "authDomain": "pureharvest-online-store.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "pureharvest-online-store.firebasestorage.app",
+  "messagingSenderId": "1046672974053",
+  "measurementId": "",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}
