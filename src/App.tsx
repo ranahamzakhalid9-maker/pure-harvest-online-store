@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import AuthModal from './components/AuthModal';
 import SearchModal from './components/SearchModal';
-import WhatsAppButton from './components/WhatsAppButton';
 import CrmSyncModal from './components/CrmSyncModal';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
@@ -220,14 +219,16 @@ export default function App() {
             {/* Brand Column (2 cols) */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#386b29] flex items-center justify-center text-white shadow-md">
-                  <Leaf className="w-5 h-5 fill-current" />
-                </div>
+                <img
+                  src="/logo.png"
+                  alt="Pure Harvest Organic"
+                  className="w-11 h-11 rounded-full object-contain bg-white shadow-md p-0.5 border border-[#386b29]"
+                />
                 <div className="flex flex-col">
                   <span className="font-serif tracking-widest text-base font-bold text-white leading-none">
                     PURE HARVEST
                   </span>
-                  <span className="text-[10px] tracking-[0.25em] text-[#86bf76] uppercase font-semibold mt-0.5">
+                  <span className="text-[10px] tracking-[0.25em] text-[#86bf76] uppercase font-bold mt-0.5">
                     ORGANIC
                   </span>
                 </div>
@@ -237,15 +238,27 @@ export default function App() {
                 Discover naturally grown, certified organic food products delivered fresh to your doorstep. 100% pesticide-free, chemical-free and sustainable.
               </p>
 
-              <div className="flex items-center gap-2 text-xs font-semibold text-[#a6d598]">
-                <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                <span>WhatsApp Order:</span>
-                <button
-                  onClick={() => openWhatsAppChat('Assalam-o-Alaikum, I want to order from Pure Harvest.')}
-                  className="text-white hover:text-[#52b13c] font-bold underline transition-colors"
-                >
-                  03094083549
-                </button>
+              <div className="space-y-1.5 text-xs text-[#a6d598]">
+                <div className="flex items-center gap-2 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                  <span>WhatsApp Order:</span>
+                  <button
+                    onClick={() => openWhatsAppChat('Assalam-o-Alaikum, I want to order from Pure Harvest.')}
+                    className="text-white hover:text-[#52b13c] font-bold underline transition-colors"
+                  >
+                    03094083549
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#86bf76]" />
+                  <span>Email:</span>
+                  <a
+                    href="mailto:pureharvestorganic@gmail.com"
+                    className="text-white hover:text-[#52b13c] font-bold underline transition-colors"
+                  >
+                    pureharvestorganic@gmail.com
+                  </a>
+                </div>
               </div>
 
               <div className="flex items-center gap-3 pt-2">
@@ -402,9 +415,6 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
-
-      {/* Floating WhatsApp Action Button */}
-      <WhatsAppButton />
 
       {/* Auth Modal (Sign In / Sign Up & Google Auth Profile) */}
       <AuthModal

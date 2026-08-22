@@ -41,22 +41,20 @@ export default function Navbar({
           {/* Brand Logo */}
           <button
             onClick={() => onNavigate('home')}
-            className="flex items-center gap-3 text-left group focus:outline-none"
+            className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
             aria-label="Pure Harvest Organic Home"
           >
-            {/* Custom pure leaf logo matching reference */}
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#386b29] flex items-center justify-center text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6 fill-current" stroke="none">
-                <path d="M12 2C6.5 2 2 6.5 2 12c0 3.5 1.8 6.6 4.6 8.4C6.2 19 6 17.5 6 16c0-5 3.5-9.3 8.3-10.4C13.5 4.3 12.8 3.1 12 2zm8 10c0-5.5-4.5-10-10-10 .8 1.1 1.5 2.3 2.3 3.6C17.1 6.7 20 11 20 16c0 1.5-.2 3-.6 4.4 2.8-1.8 4.6-4.9 4.6-8.4z" opacity="0.3"/>
-                <path d="M17 8C8 8 4 14 4 20c6 0 12-4 13-12z" />
-                <path d="M11 13c-2.5 1.5-4.5 4-5 7 2.5-.5 5-2.5 6.5-5l-1.5-2z" fill="#9cd989" />
-              </svg>
-            </div>
+            {/* User provided logo image */}
+            <img
+              src="/logo.png"
+              alt="Pure Harvest Organic"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain bg-white shadow-sm border border-[#e8e2d4] p-0.5 transition-transform duration-300 group-hover:scale-105"
+            />
             <div className="flex flex-col">
               <span className="font-extrabold text-[15px] sm:text-[17px] tracking-tight text-[#162915] leading-none">
                 PURE HARVEST
               </span>
-              <span className="text-[9px] sm:text-[10px] tracking-[0.22em] text-[#4d7f3c] font-semibold uppercase mt-0.5">
+              <span className="text-[9px] sm:text-[10px] tracking-[0.22em] text-[#4d7f3c] font-bold uppercase mt-0.5">
                 ORGANIC
               </span>
             </div>

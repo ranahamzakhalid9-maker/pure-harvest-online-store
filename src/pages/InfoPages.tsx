@@ -108,8 +108,10 @@ export function ContactPage() {
               <div className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-[#386b29] shrink-0 mt-0.5" />
                 <div>
-                  <h5 className="font-bold text-[#182a17]">Email</h5>
-                  <p>ranahamzakhalid9@gmail.com</p>
+                  <h5 className="font-bold text-[#182a17]">Official Email</h5>
+                  <a href="mailto:pureharvestorganic@gmail.com" className="text-[#386b29] font-medium hover:underline">
+                    pureharvestorganic@gmail.com
+                  </a>
                 </div>
               </div>
 
