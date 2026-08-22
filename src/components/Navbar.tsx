@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, User, Heart, ShoppingCart, Menu, X, Database } from 'lucide-react';
 import { ActivePage } from '../types';
 import type { User as FirebaseUser } from 'firebase/auth';
+import { BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
   activePage: ActivePage;
@@ -41,23 +42,10 @@ export default function Navbar({
           {/* Brand Logo */}
           <button
             onClick={() => onNavigate('home')}
-            className="flex items-center gap-3 text-left group focus:outline-none cursor-pointer"
+            className="flex items-center text-left group focus:outline-none cursor-pointer"
             aria-label="Pure Harvest Organic Home"
           >
-            {/* User provided logo image */}
-            <img
-              src="/logo.png"
-              alt="Pure Harvest Organic"
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain bg-white shadow-sm border border-[#e8e2d4] p-0.5 transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="flex flex-col">
-              <span className="font-extrabold text-[15px] sm:text-[17px] tracking-tight text-[#162915] leading-none">
-                PURE HARVEST
-              </span>
-              <span className="text-[9px] sm:text-[10px] tracking-[0.22em] text-[#4d7f3c] font-bold uppercase mt-0.5">
-                ORGANIC
-              </span>
-            </div>
+            <BrandLogo size="md" textColor="dark" />
           </button>
 
           {/* Desktop Navigation Links */}

@@ -14,6 +14,7 @@ import { AboutPage, ContactPage } from './pages/InfoPages';
 import { PRODUCTS, INITIAL_CART_ITEMS } from './data/products';
 import { Product, CartItem, ActivePage } from './types';
 import { Leaf, Instagram, Facebook, Twitter } from 'lucide-react';
+import { BrandLogo } from './components/BrandLogo';
 import { openWhatsAppChat } from './utils/whatsapp';
 import { subscribeToAuth } from './lib/firebase';
 import type { User as FirebaseUser } from 'firebase/auth';
@@ -218,21 +219,7 @@ export default function App() {
             
             {/* Brand Column (2 cols) */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/logo.png"
-                  alt="Pure Harvest Organic"
-                  className="w-11 h-11 rounded-full object-contain bg-white shadow-md p-0.5 border border-[#386b29]"
-                />
-                <div className="flex flex-col">
-                  <span className="font-serif tracking-widest text-base font-bold text-white leading-none">
-                    PURE HARVEST
-                  </span>
-                  <span className="text-[10px] tracking-[0.25em] text-[#86bf76] uppercase font-bold mt-0.5">
-                    ORGANIC
-                  </span>
-                </div>
-              </div>
+              <BrandLogo size="md" textColor="light" />
 
               <p className="text-xs sm:text-sm text-[#b2cab0] leading-relaxed max-w-sm">
                 Discover naturally grown, certified organic food products delivered fresh to your doorstep. 100% pesticide-free, chemical-free and sustainable.
