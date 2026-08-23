@@ -141,18 +141,18 @@ export default function HomePage({
       <SocialSidebar />
 
       {/* 1. HERO SECTION */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-10">
-        <div className="relative rounded-3xl sm:rounded-[36px] overflow-hidden p-6 sm:p-8 lg:p-12 border border-[#e4dccb] shadow-[0_12px_40px_rgba(0,0,0,0.06)] bg-[#faf7f0]">
+      <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2 sm:pt-6 lg:pt-8 pb-8 sm:pb-10">
+        <div className="relative rounded-2xl sm:rounded-[36px] overflow-hidden p-5 sm:p-8 lg:p-12 border border-[#e4dccb] shadow-[0_12px_40px_rgba(0,0,0,0.06)] bg-[#faf7f0]">
           {/* Direct Background Image inside Hero Container as requested */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
             <img
               src="https://i.postimg.cc/JhG2xggD/b6cb7d14-7bf8-4a27-b025-a8370508288e.png"
               alt="Pure Harvest Organic Farm Background"
-              className="w-full h-full object-cover object-left-center scale-105"
+              className="w-full h-full object-cover object-center scale-105"
               referrerPolicy="no-referrer"
             />
             {/* Soft gradient to keep typography crisp and readable while showing the background image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#fbf9f4]/92 via-[#fbf9f4]/80 to-[#fbf9f4]/40 lg:via-[#fbf9f4]/70 lg:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#fbf9f4]/95 via-[#fbf9f4]/85 to-[#fbf9f4]/50 lg:via-[#fbf9f4]/70 lg:to-transparent" />
           </div>
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
@@ -165,19 +165,19 @@ export default function HomePage({
                 </span>
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-[#162915] leading-[1.08] mb-4 sm:mb-5 drop-shadow-xs">
+              <h1 className="font-serif text-3xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-[#162915] leading-[1.1] sm:leading-[1.08] mb-3 sm:mb-5 drop-shadow-xs">
                 Pure Food.<br />
                 <span className="text-[#386b29] italic font-normal">Pure Life.</span>
               </h1>
 
-              <p className="text-sm sm:text-base lg:text-lg text-[#445643] max-w-md mx-auto lg:mx-0 leading-relaxed mb-6 sm:mb-8 font-medium">
+              <p className="text-xs sm:text-base lg:text-lg text-[#445643] max-w-md mx-auto lg:mx-0 leading-relaxed mb-5 sm:mb-8 font-medium">
                 Pesticide-free stone-ground chakki wheat flours, multigrain atta, and pure Desi Ghee delivered directly to your doorstep in Islamabad and Rawalpindi.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4">
                 <button
                   onClick={() => onNavigate('shop')}
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#386b29] hover:bg-[#2c5620] text-white font-semibold text-[14px] sm:text-[15px] flex items-center justify-center gap-2.5 shadow-[0_6px_20px_rgba(56,107,41,0.25)] hover:shadow-[0_8px_25px_rgba(56,107,41,0.35)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#386b29] hover:bg-[#2c5620] text-white font-semibold text-[13px] sm:text-[15px] flex items-center justify-center gap-2.5 shadow-[0_6px_20px_rgba(56,107,41,0.25)] hover:shadow-[0_8px_25px_rgba(56,107,41,0.35)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   <span>SHOP NOW</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -185,7 +185,7 @@ export default function HomePage({
 
                 <button
                   onClick={() => onNavigate('categories')}
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white/95 hover:bg-white text-[#162915] font-semibold text-[14px] sm:text-[15px] border border-[#e3dccf] flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer backdrop-blur-xs"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white/95 hover:bg-white text-[#162915] font-semibold text-[13px] sm:text-[15px] border border-[#e3dccf] flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer backdrop-blur-xs"
                 >
                   <span>EXPLORE CATEGORIES</span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5] text-[#386b29]" />
@@ -193,20 +193,20 @@ export default function HomePage({
               </div>
 
               {/* Micro Trust Stats */}
-              <div className="mt-7 pt-6 border-t border-[#eee7d8]/80 flex items-center justify-center lg:justify-start gap-6 text-xs text-[#4b5e4a] font-medium">
+              <div className="mt-5 sm:mt-7 pt-4 sm:pt-6 border-t border-[#eee7d8]/80 flex items-center justify-center lg:justify-start gap-4 sm:gap-6 text-[11px] sm:text-xs text-[#4b5e4a] font-medium">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#386b29]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#386b29]" />
                   <span>Cash on Delivery</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#386b29]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#386b29]" />
                   <span>Islamabad & Pindi Only</span>
                 </div>
               </div>
             </div>
 
             {/* Right 3D Product Scene (7 cols) */}
-            <div className="lg:col-span-7 flex items-center justify-center relative">
+            <div className="lg:col-span-7 flex items-center justify-center relative w-full overflow-hidden">
               <HeroProductScene />
             </div>
           </div>

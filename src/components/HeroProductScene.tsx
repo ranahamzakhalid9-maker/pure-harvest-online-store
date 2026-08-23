@@ -18,7 +18,7 @@ export default function HeroProductScene() {
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full aspect-[4/3] sm:aspect-square max-w-[560px] lg:max-w-[620px] mx-auto flex items-center justify-center select-none perspective-[1000px]"
+      className="relative w-full aspect-[4/3] sm:aspect-square max-w-[560px] lg:max-w-[620px] mx-auto flex items-center justify-center select-none perspective-[1000px] overflow-hidden rounded-3xl"
     >
       {/* Background Soft Glow & Halo Rings */}
       <div 
