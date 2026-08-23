@@ -29,12 +29,12 @@ export default function CheckoutPage({ cartItems, currentUser, onNavigate, onCle
   // Form State
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
     fullName: currentUser?.displayName || 'Hamza Khalid',
-    phone: '03094083549',
-    email: currentUser?.email || 'ranahamzakhalid9@gmail.com',
-    address: 'House 42, Street 7, Block B, DHA Phase 5',
-    city: 'Lahore',
-    state: 'Punjab',
-    postalCode: '54000',
+    phone: '03065568146',
+    email: currentUser?.email || 'customer@pureharvest.pk',
+    address: 'Paris Tower Road, Umer Block H13',
+    city: 'Islamabad',
+    state: 'Islamabad Capital',
+    postalCode: '44000',
     saveAddress: true
   });
 
@@ -389,38 +389,36 @@ export default function CheckoutPage({ cartItems, currentUser, onNavigate, onCle
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-xs font-semibold text-[#445542] mb-1.5">
-                          City *
+                          City (Islamabad & Rawalpindi Only) *
                         </label>
                         <select
                           value={shippingInfo.city}
-                          onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
+                          onChange={(e) => {
+                            const newCity = e.target.value;
+                            setShippingInfo({
+                              ...shippingInfo,
+                              city: newCity,
+                              state: newCity === 'Islamabad' ? 'Islamabad Capital' : 'Punjab'
+                            });
+                          }}
                           className="w-full px-3 py-2.5 rounded-xl border border-[#e2d9cd] bg-[#fbf9f4] text-xs sm:text-sm text-[#182a17] focus:bg-white focus:outline-none focus:border-[#386b29]"
                         >
-                          <option value="Lahore">Lahore</option>
-                          <option value="Karachi">Karachi</option>
                           <option value="Islamabad">Islamabad</option>
                           <option value="Rawalpindi">Rawalpindi</option>
-                          <option value="Faisalabad">Faisalabad</option>
-                          <option value="Multan">Multan</option>
-                          <option value="Peshawar">Peshawar</option>
-                          <option value="Quetta">Quetta</option>
                         </select>
                       </div>
 
                       <div>
                         <label className="block text-xs font-semibold text-[#445542] mb-1.5">
-                          State / Province *
+                          State / Territory *
                         </label>
                         <select
                           value={shippingInfo.state}
                           onChange={(e) => setShippingInfo({ ...shippingInfo, state: e.target.value })}
                           className="w-full px-3 py-2.5 rounded-xl border border-[#e2d9cd] bg-[#fbf9f4] text-xs sm:text-sm text-[#182a17] focus:bg-white focus:outline-none focus:border-[#386b29]"
                         >
-                          <option value="Punjab">Punjab</option>
-                          <option value="Sindh">Sindh</option>
-                          <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
-                          <option value="Balochistan">Balochistan</option>
                           <option value="Islamabad Capital">Islamabad Capital</option>
+                          <option value="Punjab">Punjab (Rawalpindi)</option>
                         </select>
                       </div>
 

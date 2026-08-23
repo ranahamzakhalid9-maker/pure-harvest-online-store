@@ -22,9 +22,10 @@ export default function CartPage({
   onToggleWishlist,
   wishlistIds
 }: CartPageProps) {
-  const [couponCode, setCouponCode] = useState('WELCOME10');
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>('WELCOME10');
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [couponError, setCouponError] = useState('');
+  const [couponSuccess, setCouponSuccess] = useState('');
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   const deliveryFee = subtotal > 0 ? 150 : 0;
@@ -34,13 +35,27 @@ export default function CartPage({
   const handleApplyCoupon = (e: FormEvent) => {
     e.preventDefault();
     setCouponError('');
-    if (couponCode.trim().toUpperCase() === 'WELCOME10') {
-      setAppliedCoupon('WELCOME10');
-    } else if (couponCode.trim().toUpperCase() === 'PUREHARVEST') {
-      setAppliedCoupon('PUREHARVEST');
-    } else {
-      setCouponError('Invalid coupon code. Try "WELCOME10"');
+    setCouponSuccess('');
+    const code = couponCode.trim().toUpperCase();
+
+    if (!code) {
+      setCouponError('Please enter a coupon code.');
+      return;
     }
+
+    if (code === 'WELCOME10' || code === 'PUREHARVEST') {
+      setAppliedCoupon(code);
+      setCouponSuccess(`Coupon code "${code}" applied! You saved 10%.`);
+    } else {
+      setCouponError('Invalid coupon code. Use "WELCOME10" to get 10% off.');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode('');
+    setCouponSuccess('');
+    setCouponError('');
   };
 
   return (
@@ -206,15 +221,33 @@ export default function CartPage({
                     Apply
                   </button>
                 </form>
-                {appliedCoupon && (
-                  <div className="mt-2 text-xs text-[#386b29] font-semibold flex items-center gap-1">
-                    <Check className="w-3.5 h-3.5" /> Coupon "{appliedCoupon}" applied (10% OFF)!
+                {appliedCoupon ? (
+                  <div className="mt-3 p-3 bg-[#f0f7ee] border border-[#cde8c7] rounded-xl flex items-center justify-between">
+                    <div className="text-xs text-[#386b29] font-bold flex items-center gap-1.5">
+                      <Check className="w-4 h-4" />
+                      <span>Coupon "{appliedCoupon}" applied — 10% Discount active!</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRemoveCoupon}
+                      className="text-xs text-[#c0392b] hover:underline font-semibold"
+                    >
+                      Remove
+                    </button>
                   </div>
-                )}
-                {couponError && (
-                  <div className="mt-2 text-xs text-red-600 font-medium">
-                    {couponError}
-                  </div>
+                ) : (
+                  <>
+                    {couponError && (
+                      <div className="mt-2 text-xs text-red-600 font-medium">
+                        {couponError}
+                      </div>
+                    )}
+                    {couponSuccess && (
+                      <div className="mt-2 text-xs text-[#386b29] font-medium">
+                        {couponSuccess}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -274,7 +307,7 @@ export default function CartPage({
                     title="Directly send cart items to WhatsApp"
                   >
                     <MessageCircle className="w-4 h-4 fill-current stroke-none" />
-                    <span>Order via WhatsApp ({WHATSAPP_DISPLAY_NUMBER})</span>
+                    <span>Contact via WhatsApp ({WHATSAPP_DISPLAY_NUMBER})</span>
                   </button>
                 </div>
 

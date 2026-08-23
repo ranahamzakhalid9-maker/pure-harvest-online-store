@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
-import { Star, Heart, ShoppingCart, LayoutGrid, List, SlidersHorizontal, ChevronRight, Wheat, Sprout, Droplets } from 'lucide-react';
+import { Star, Heart, ShoppingCart, LayoutGrid, List, SlidersHorizontal, ChevronRight, Wheat, Sprout, Droplets, RotateCcw, MessageCircle } from 'lucide-react';
 import { PRODUCTS } from '../data/products';
 import { Product } from '../types';
 import HeroBasketScene from '../components/HeroBasketScene';
 import TrustStrip from '../components/TrustStrip';
+import { openWhatsAppChat, generateProductWhatsAppMessage } from '../utils/whatsapp';
 
 interface ShopPageProps {
   onSelectProduct: (product: Product) => void;
@@ -12,13 +13,6 @@ interface ShopPageProps {
   wishlistIds: string[];
   initialCategory?: string;
 }
-
-const CATEGORY_ITEMS = [
-  { name: 'All Products', count: 5, slug: 'all', icon: LayoutGrid },
-  { name: 'Flour & Atta', count: 3, slug: 'flour', icon: Wheat },
-  { name: 'Grains & Pulses', count: 1, slug: 'pulses', icon: Sprout },
-  { name: 'Organic Ghee', count: 1, slug: 'ghee', icon: Droplets }
-];
 
 export default function ShopPage({
   onSelectProduct,
@@ -32,17 +26,41 @@ export default function ShopPage({
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [currentPage, setCurrentPage] = useState(1);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+  // Dynamic Category definitions based on real PRODUCTS data
+  const categoryItems = useMemo(() => {
+    const counts = {
+      all: PRODUCTS.length,
+      flour: PRODUCTS.filter((p) => p.categorySlug === 'flour').length,
+      ghee: PRODUCTS.filter((p) => p.categorySlug === 'ghee').length
+    };
+
+    return [
+      { name: 'All Products', count: counts.all, slug: 'all', icon: LayoutGrid },
+      { name: 'Flour & Atta', count: counts.flour, slug: 'flour', icon: Wheat },
+      { name: 'Organic Desi Ghee', count: counts.ghee, slug: 'ghee', icon: Droplets }
+    ];
+  }, []);
+
+  // Dynamic Ratings counts from real PRODUCTS data
+  const ratingCounts = useMemo(() => {
+    const counts: Record<number, number> = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    PRODUCTS.forEach((p) => {
+      const star = Math.floor(p.rating);
+      if (counts[star] !== undefined) {
+        counts[star]++;
+      }
+    });
+    return counts;
+  }, []);
 
   // Filtered and Sorted Products
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
       // Category filter
-      if (selectedCategory !== 'all') {
-        if (selectedCategory === 'flour' && p.categorySlug !== 'flour') return false;
-        if (selectedCategory === 'pulses' && p.categorySlug !== 'pulses') return false;
-        if (selectedCategory === 'ghee' && p.categorySlug !== 'ghee') return false;
+      if (selectedCategory !== 'all' && p.categorySlug !== selectedCategory) {
+        return false;
       }
 
       // Price filter
@@ -56,9 +74,19 @@ export default function ShopPage({
       if (sortBy === 'price-low') return a.price - b.price;
       if (sortBy === 'price-high') return b.price - a.price;
       if (sortBy === 'rating') return b.rating - a.rating;
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
       return 0; // featured default
     });
   }, [selectedCategory, priceRange, selectedRating, sortBy]);
+
+  const handleResetFilters = () => {
+    setSelectedCategory('all');
+    setPriceRange(5000);
+    setSelectedRating(null);
+    setSortBy('featured');
+  };
+
+  const hasActiveFilters = selectedCategory !== 'all' || priceRange < 5000 || selectedRating !== null;
 
   return (
     <div className="w-full min-h-screen">
@@ -74,11 +102,11 @@ export default function ShopPage({
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#162915] leading-tight mb-3">
-              Our Products
+              Our Harvest
             </h1>
 
             <p className="text-sm sm:text-base text-[#596d58] leading-relaxed">
-              Explore our wide range of 100% organic products, grown with care and delivered fresh.
+              Explore our freshly milled chakki flours, washed lentils, and pure bilona desi ghee — 100% natural and unadulterated.
             </p>
           </div>
 
@@ -94,16 +122,16 @@ export default function ShopPage({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Mobile Filter Toggle Button */}
-          <div className="lg:hidden col-span-1 flex justify-between items-center bg-white p-4 rounded-2xl border border-[#ede7d8]">
+          <div className="lg:hidden col-span-1 flex justify-between items-center bg-white p-4 rounded-2xl border border-[#ede7d8] shadow-xs">
             <button
               onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-              className="flex items-center gap-2 text-sm font-semibold text-[#1c2e1f]"
+              className="flex items-center gap-2 text-sm font-bold text-[#1c2e1f]"
             >
               <SlidersHorizontal className="w-4 h-4 text-[#386b29]" />
-              {mobileFilterOpen ? 'Hide Filters' : 'Show Filter Options'}
+              {mobileFilterOpen ? 'Hide Filters' : 'Filter Products'}
             </button>
-            <span className="text-xs text-[#718270]">
-              {filteredProducts.length} items found
+            <span className="text-xs font-semibold text-[#386b29] bg-[#eef6ec] px-2.5 py-1 rounded-full">
+              {filteredProducts.length} available
             </span>
           </div>
 
@@ -112,13 +140,23 @@ export default function ShopPage({
             
             {/* Category Panel */}
             <div className="bg-white rounded-3xl p-6 border border-[#ece6d7] shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#f3efe4]">
-                <div className="w-1.5 h-4 bg-[#386b29] rounded-full" />
-                <h3 className="font-bold text-[#162915] text-[16px]">Categories</h3>
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#f3efe4]">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-4 bg-[#386b29] rounded-full" />
+                  <h3 className="font-bold text-[#162915] text-[16px]">Categories</h3>
+                </div>
+                {selectedCategory !== 'all' && (
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className="text-xs text-[#386b29] hover:underline font-semibold"
+                  >
+                    View All
+                  </button>
+                )}
               </div>
 
               <div className="space-y-1">
-                {CATEGORY_ITEMS.map((cat) => {
+                {categoryItems.map((cat) => {
                   const Icon = cat.icon;
                   const isSelected = selectedCategory === cat.slug;
                   return (
@@ -127,7 +165,7 @@ export default function ShopPage({
                       onClick={() => setSelectedCategory(cat.slug)}
                       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
                         isSelected
-                          ? 'bg-[#eef6ec] text-[#386b29] font-semibold shadow-2xs'
+                          ? 'bg-[#eef6ec] text-[#386b29] font-bold shadow-2xs'
                           : 'text-[#445343] hover:bg-[#faf7f0] hover:text-[#182a17]'
                       }`}
                     >
@@ -145,71 +183,100 @@ export default function ShopPage({
             </div>
 
             {/* Filter By Panel */}
-            <div className="bg-white rounded-3xl p-6 border border-[#ece6d7] shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#f3efe4]">
-                <div className="w-1.5 h-4 bg-[#386b29] rounded-full" />
-                <h3 className="font-bold text-[#162915] text-[16px]">Filter By</h3>
+            <div className="bg-white rounded-3xl p-6 border border-[#ece6d7] shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-[#f3efe4]">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-4 bg-[#386b29] rounded-full" />
+                  <h3 className="font-bold text-[#162915] text-[16px]">Filter By</h3>
+                </div>
+                {hasActiveFilters && (
+                  <button
+                    onClick={handleResetFilters}
+                    className="text-xs text-[#c0392b] hover:underline flex items-center gap-1 font-semibold"
+                    title="Reset all filters"
+                  >
+                    <RotateCcw className="w-3 h-3" /> Reset
+                  </button>
+                )}
               </div>
 
               {/* Price Range Slider */}
-              <div className="mb-6">
+              <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#637761] mb-2">
-                  Price Range
+                  Max Price
                 </label>
                 <input
                   type="range"
-                  min="200"
+                  min="500"
                   max="5000"
-                  step="100"
+                  step="50"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
                   className="w-full accent-[#386b29] cursor-pointer"
                 />
                 <div className="flex items-center justify-between text-xs font-semibold text-[#182a17] mt-2">
-                  <span>Rs. 200</span>
-                  <span className="text-[#386b29] bg-[#eef6ec] px-2.5 py-1 rounded-md">
+                  <span>Rs. 500</span>
+                  <span className="text-[#386b29] bg-[#eef6ec] px-2.5 py-1 rounded-md font-bold">
                     Up to Rs. {priceRange.toLocaleString()}
                   </span>
                 </div>
               </div>
 
               {/* Ratings Filter */}
-              <div className="mb-6">
+              <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#637761] mb-2.5">
                   Ratings
                 </label>
                 <div className="space-y-1.5">
-                  {[5, 4, 3, 2, 1].map((stars) => (
-                    <button
-                      key={stars}
-                      onClick={() => setSelectedRating(selectedRating === stars ? null : stars)}
-                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors ${
-                        selectedRating === stars ? 'bg-[#eef6ec] text-[#386b29] font-bold' : 'hover:bg-[#faf7f0]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-1 text-[#f5a623]">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3.5 h-3.5 ${i < stars ? 'fill-current' : 'text-[#ded7c8]'}`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-[11px] text-[#909f8f]">
-                        {stars === 5 ? '(12)' : stars === 4 ? '(08)' : stars === 3 ? '(03)' : '(01)'}
-                      </span>
-                    </button>
-                  ))}
+                  {[5, 4].map((stars) => {
+                    const count = ratingCounts[stars] || 0;
+                    const isSelected = selectedRating === stars;
+                    return (
+                      <button
+                        key={stars}
+                        onClick={() => setSelectedRating(isSelected ? null : stars)}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors ${
+                          isSelected ? 'bg-[#eef6ec] text-[#386b29] font-bold' : 'hover:bg-[#faf7f0]'
+                        }`}
+                      >
+                        <div className="flex items-center gap-1 text-[#f5a623]">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-3.5 h-3.5 ${i < stars ? 'fill-current' : 'text-[#ded7c8]'}`}
+                            />
+                          ))}
+                          <span className="text-[11px] text-[#556754] ml-1 font-medium">& Up</span>
+                        </div>
+                        <span className="text-[11px] text-[#909f8f]">
+                          ({count < 10 ? `0${count}` : count})
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Apply Filters Button */}
+              {/* WhatsApp Quick Assistance Card */}
+              <div className="p-4 bg-[#f0f7ee] border border-[#d6ecd2] rounded-2xl text-center space-y-2">
+                <p className="text-xs font-semibold text-[#2c5820]">
+                  Need help choosing the right flour or desi ghee?
+                </p>
+                <button
+                  onClick={() => openWhatsAppChat('Assalam-o-Alaikum, I need help selecting products from Pure Harvest Organic.')}
+                  className="w-full py-2 px-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
+                  <span>WhatsApp Farm Help</span>
+                </button>
+              </div>
+
+              {/* Close Mobile Filter */}
               <button
                 onClick={() => setMobileFilterOpen(false)}
-                className="w-full py-3 rounded-xl bg-[#386b29] hover:bg-[#2d5621] text-white text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-xs transition-all"
+                className="lg:hidden w-full py-3 rounded-xl bg-[#386b29] hover:bg-[#2d5621] text-white text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-xs transition-all"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5" />
-                <span>APPLY FILTERS</span>
+                <span>SHOW {filteredProducts.length} PRODUCTS</span>
               </button>
             </div>
           </aside>
@@ -219,8 +286,10 @@ export default function ShopPage({
             
             {/* Header bar: Count, Sort Dropdown & View Mode */}
             <div className="bg-white rounded-2xl p-4 sm:px-6 sm:py-3.5 border border-[#ece6d7] flex flex-wrap items-center justify-between gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.02)]">
+              {/* Product Count matching reality */}
               <div className="text-xs sm:text-sm font-medium text-[#5c6e5a]">
-                Showing <span className="font-bold text-[#162915]">1–{filteredProducts.length}</span> of 24 results
+                Showing <span className="font-bold text-[#162915]">1–{filteredProducts.length}</span> of{' '}
+                <span className="font-bold text-[#162915]">{filteredProducts.length}</span> results
               </div>
 
               <div className="flex items-center gap-3">
@@ -236,6 +305,7 @@ export default function ShopPage({
                     <option value="price-low">Price: Low to High</option>
                     <option value="price-high">Price: High to Low</option>
                     <option value="rating">Top Rated</option>
+                    <option value="name">Name (A-Z)</option>
                   </select>
                 </div>
 
@@ -264,18 +334,36 @@ export default function ShopPage({
             </div>
 
             {/* Product Cards */}
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            {filteredProducts.length === 0 ? (
+              <div className="bg-white rounded-3xl p-12 text-center border border-[#ede7d8] space-y-4">
+                <div className="w-14 h-14 rounded-full bg-[#f0f7ee] text-[#386b29] flex items-center justify-center mx-auto">
+                  <SlidersHorizontal className="w-6 h-6" />
+                </div>
+                <h3 className="font-serif text-xl font-bold text-[#182a17]">No Products Match Your Filters</h3>
+                <p className="text-xs sm:text-sm text-[#677965] max-w-md mx-auto">
+                  Try adjusting the price range or clearing category filters to view our full organic harvest.
+                </p>
+                <button
+                  onClick={handleResetFilters}
+                  className="px-6 py-2.5 rounded-full bg-[#386b29] text-white text-xs font-bold hover:bg-[#2c5520] transition-colors"
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            ) : viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                 {filteredProducts.map((product) => {
                   const isWishlisted = wishlistIds.includes(product.id);
                   return (
                     <div
                       key={product.id}
-                      className="bg-white rounded-3xl p-4 sm:p-5 border border-[#ede7d8] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(56,107,41,0.1)] transition-all duration-300 flex flex-col justify-between group transform hover:-translate-y-1"
+                      onClick={() => onSelectProduct(product)}
+                      className="bg-white rounded-3xl p-5 border border-[#ede7d8] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(56,107,41,0.1)] transition-all duration-300 flex flex-col justify-between group transform hover:-translate-y-1 cursor-pointer"
                     >
                       {/* Top: Wishlist button & Image container */}
-                      <div className="relative aspect-square w-full rounded-2xl bg-[#fbf9f4] border border-[#f3efe5] p-3 flex items-center justify-center overflow-hidden mb-3.5">
+                      <div className="relative aspect-square w-full rounded-2xl bg-[#fbf9f4] border border-[#f3efe5] p-4 flex items-center justify-center overflow-hidden mb-3.5">
                         <button
+                          type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             onToggleWishlist(product.id);
@@ -293,37 +381,37 @@ export default function ShopPage({
                         <img
                           src={product.image}
                           alt={product.name}
-                          onClick={() => onSelectProduct(product)}
-                          className="w-full h-full object-contain cursor-pointer transition-transform duration-500 group-hover:scale-108 group-hover:-translate-y-1"
+                          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-108"
                         />
                       </div>
 
-                      {/* Middle: Name, Rating & Prices */}
+                      {/* Middle: Category, Name, Rating & Prices */}
                       <div className="mb-4">
-                        <h4
-                          onClick={() => onSelectProduct(product)}
-                          className="font-bold text-[#162915] text-[15px] hover:text-[#386b29] transition-colors cursor-pointer leading-snug line-clamp-1"
-                        >
+                        <span className="text-[11px] font-bold text-[#386b29] uppercase tracking-wider">
+                          {product.category}
+                        </span>
+                        <h4 className="font-bold text-[#162915] text-[16px] group-hover:text-[#386b29] transition-colors leading-snug line-clamp-1 mt-0.5">
                           {product.name}
                         </h4>
+                        <p className="text-xs text-[#71836f] mt-0.5">{product.netWeight}</p>
 
                         {/* Rating stars & review count */}
-                        <div className="flex items-center gap-1.5 mt-1.5">
+                        <div className="flex items-center gap-1.5 mt-2">
                           <div className="flex text-[#f5a623]">
                             {Array.from({ length: 5 }).map((_, i) => (
                               <Star
                                 key={i}
-                                className={`w-3 h-3 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-[#e2dbce]'}`}
+                                className={`w-3.5 h-3.5 ${i < Math.floor(product.rating) ? 'fill-current' : 'text-[#e2dbce]'}`}
                               />
                             ))}
                           </div>
-                          <span className="text-[11px] text-[#869784]">
+                          <span className="text-[11px] font-semibold text-[#869784]">
                             ({product.reviewsCount})
                           </span>
                         </div>
 
                         {/* Pricing */}
-                        <div className="flex items-baseline gap-2 mt-2">
+                        <div className="flex items-baseline gap-2 mt-2.5">
                           {product.originalPrice && (
                             <span className="text-xs text-[#9aa798] line-through font-normal">
                               Rs. {product.originalPrice.toLocaleString()}
@@ -332,17 +420,42 @@ export default function ShopPage({
                           <span className="text-base font-extrabold text-[#386b29]">
                             Rs. {product.price.toLocaleString()}
                           </span>
+                          {product.discountPercent && (
+                            <span className="text-[10px] font-bold bg-[#eef6ec] text-[#386b29] px-2 py-0.5 rounded-md border border-[#cfe6cb]">
+                              {product.discountPercent}% OFF
+                            </span>
+                          )}
                         </div>
                       </div>
 
-                      {/* Bottom: Add to Cart Button */}
-                      <button
-                        onClick={() => onAddToCart(product, 1)}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#386b29] hover:bg-[#2c5520] text-white font-semibold text-xs sm:text-[13px] flex items-center justify-between shadow-xs hover:shadow-md transition-all active:scale-98"
-                      >
-                        <span>Add to Cart</span>
-                        <ShoppingCart className="w-3.5 h-3.5 stroke-[2.2]" />
-                      </button>
+                      {/* Bottom Action Buttons: Add to Cart & WhatsApp */}
+                      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-[#f4efe4]">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddToCart(product, 1);
+                          }}
+                          className="py-2.5 px-3 rounded-xl bg-[#386b29] hover:bg-[#2c5520] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-98"
+                        >
+                          <ShoppingCart className="w-3.5 h-3.5" />
+                          <span>Add to Cart</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const msg = generateProductWhatsAppMessage(product, 1);
+                            openWhatsAppChat(msg);
+                          }}
+                          className="py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-98"
+                          title="Order on WhatsApp"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
+                          <span>WhatsApp</span>
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
@@ -353,22 +466,22 @@ export default function ShopPage({
                 {filteredProducts.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-3xl p-5 border border-[#ede7d8] shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col sm:flex-row items-center gap-6 group hover:border-[#c9e4c3] transition-all"
+                    onClick={() => onSelectProduct(product)}
+                    className="bg-white rounded-3xl p-5 border border-[#ede7d8] shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col sm:flex-row items-center gap-6 group hover:border-[#c9e4c3] transition-all cursor-pointer"
                   >
                     <div className="w-32 h-32 rounded-2xl bg-[#fbf9f4] border border-[#f3efe5] p-2 flex items-center justify-center shrink-0">
                       <img
                         src={product.image}
                         alt={product.name}
-                        onClick={() => onSelectProduct(product)}
-                        className="w-full h-full object-contain cursor-pointer transition-transform group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform group-hover:scale-105"
                       />
                     </div>
 
                     <div className="flex-1 text-center sm:text-left">
-                      <h4
-                        onClick={() => onSelectProduct(product)}
-                        className="font-bold text-[#162915] text-lg hover:text-[#386b29] transition-colors cursor-pointer"
-                      >
+                      <span className="text-[11px] font-bold text-[#386b29] uppercase tracking-wider">
+                        {product.category}
+                      </span>
+                      <h4 className="font-bold text-[#162915] text-lg group-hover:text-[#386b29] transition-colors">
                         {product.name}
                       </h4>
                       <p className="text-xs text-[#6e806c] line-clamp-2 mt-1">
@@ -381,6 +494,7 @@ export default function ShopPage({
                           ))}
                         </div>
                         <span className="text-xs text-[#869784]">({product.reviewsCount} reviews)</span>
+                        <span className="text-xs text-[#556754] font-semibold ml-2">Weight: {product.netWeight}</span>
                       </div>
                     </div>
 
@@ -395,55 +509,43 @@ export default function ShopPage({
                           Rs. {product.price.toLocaleString()}
                         </div>
                       </div>
-                      <button
-                        onClick={() => onAddToCart(product, 1)}
-                        className="py-2 px-5 rounded-xl bg-[#386b29] hover:bg-[#2c5520] text-white font-semibold text-xs flex items-center gap-2 shadow-xs"
-                      >
-                        <span>Add to Cart</span>
-                        <ShoppingCart className="w-3.5 h-3.5" />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddToCart(product, 1);
+                          }}
+                          className="py-2 px-4 rounded-xl bg-[#386b29] hover:bg-[#2c5520] text-white font-semibold text-xs flex items-center gap-1.5 shadow-xs"
+                        >
+                          <ShoppingCart className="w-3.5 h-3.5" />
+                          <span>Add to Cart</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const msg = generateProductWhatsAppMessage(product, 1);
+                            openWhatsAppChat(msg);
+                          }}
+                          className="py-2 px-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-xs flex items-center gap-1.5 shadow-xs"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5 fill-current stroke-none" />
+                          <span>WhatsApp</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
-
-            {/* 12. Pagination matching reference: ← 1 2 3 → */}
-            <div className="flex items-center justify-center gap-2 pt-6 pb-2">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                className="w-9 h-9 rounded-full bg-white border border-[#e5ded0] text-[#556753] hover:bg-[#f4efe4] flex items-center justify-center text-sm font-bold transition-colors"
-                aria-label="Previous Page"
-              >
-                ←
-              </button>
-              {[1, 2, 3].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setCurrentPage(num)}
-                  className={`w-9 h-9 rounded-full text-xs font-bold transition-all ${
-                    currentPage === num
-                      ? 'bg-[#386b29] text-white shadow-sm scale-105'
-                      : 'bg-white border border-[#e5ded0] text-[#445542] hover:bg-[#f4efe4]'
-                  }`}
-                >
-                  {num}
-                </button>
-              ))}
-              <button
-                onClick={() => setCurrentPage(Math.min(3, currentPage + 1))}
-                className="w-9 h-9 rounded-full bg-white border border-[#e5ded0] text-[#556753] hover:bg-[#f4efe4] flex items-center justify-center text-sm font-bold transition-colors"
-                aria-label="Next Page"
-              >
-                →
-              </button>
-            </div>
           </main>
         </div>
       </section>
 
-      {/* 13. Trust Strip */}
+      {/* 3. Trust Strip */}
       <TrustStrip />
     </div>
   );
 }
+

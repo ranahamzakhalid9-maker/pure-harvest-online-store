@@ -12,7 +12,7 @@ interface NavbarProps {
   currentUser?: FirebaseUser | null;
   onOpenAuth: () => void;
   onOpenSearch: () => void;
-  onOpenCrmSync: () => void;
+  onOpenCrmSync?: () => void;
 }
 
 export default function Navbar({
@@ -61,9 +61,9 @@ export default function Navbar({
                 <button
                   key={item.page}
                   onClick={() => onNavigate(item.page)}
-                  className="relative py-1 text-[14px] lg:text-[15px] font-medium transition-colors duration-200 focus:outline-none"
+                  className="relative py-1 text-[14px] lg:text-[15px] font-medium transition-colors duration-200 focus:outline-none cursor-pointer"
                 >
-                  <span className={isActive ? 'text-[#386b29] font-semibold' : 'text-[#445343] hover:text-[#182a17]'}>
+                  <span className={isActive ? 'text-[#386b29] font-bold' : 'text-[#445343] hover:text-[#182a17]'}>
                     {item.label}
                   </span>
                   {isActive && (
@@ -76,17 +76,6 @@ export default function Navbar({
 
           {/* Right Action Icons & Cart */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* CRM & Database Sync Hub Button */}
-            <button
-              onClick={onOpenCrmSync}
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f2f8ef] hover:bg-[#e4f2de] border border-[#cce5c6] text-[#2c5820] text-xs font-semibold transition-all shadow-2xs group"
-              title="Firestore Database & CRM Sync Hub"
-            >
-              <Database className="w-3.5 h-3.5 text-[#386b29] group-hover:rotate-12 transition-transform" />
-              <span>CRM & DB Sync</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-            </button>
-
             {/* Search Icon */}
             <button
               onClick={onOpenSearch}
@@ -189,16 +178,7 @@ export default function Navbar({
                 </button>
               );
             })}
-            <div className="pt-2 border-t border-[#f0ebd9] mt-1 flex flex-wrap items-center justify-around gap-1">
-              <button
-                onClick={() => {
-                  onOpenCrmSync();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex items-center gap-1.5 text-xs text-[#2e5820] font-bold py-2 px-3 bg-[#eef7ec] rounded-lg border border-[#c5e4bf]"
-              >
-                <Database className="w-3.5 h-3.5 text-[#386b29]" /> CRM Sync
-              </button>
+            <div className="pt-2 border-t border-[#f0ebd9] mt-1 flex items-center justify-between px-2">
               <button
                 onClick={() => {
                   onOpenSearch();

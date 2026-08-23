@@ -18,17 +18,34 @@ export default function HeroBasketScene() {
 
       {/* Main Composition */}
       <div className="relative w-full h-full flex items-center justify-center">
-        {/* Wicker Harvest Basket Image */}
-        <div className="relative w-[85%] h-[85%] flex items-center justify-center">
-          <img
-            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=85"
-            alt="Pure Organic Harvest Basket"
-            className="w-full h-full object-cover rounded-3xl shadow-[0_12px_28px_rgba(0,0,0,0.08)] border-2 border-white/80"
-          />
+        {/* Real Product Showcase */}
+        <div className="relative w-[90%] h-[90%] flex items-center justify-center">
+          <div className="grid grid-cols-2 gap-3 w-full h-full p-2 bg-white/70 backdrop-blur-xs rounded-3xl border-2 border-white/80 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="relative h-full overflow-hidden rounded-2xl bg-white border border-[#eee8dc]">
+              <img
+                src="https://i.postimg.cc/RF6QRwZh/1bdf141f-fb57-4248-a592-a1910a5c7b4a.png"
+                alt="Stone Ground Flour"
+                className="w-full h-full object-cover"
+              />
+              <span className="absolute bottom-2 left-2 bg-[#182a17]/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
+                Chakki Atta
+              </span>
+            </div>
+            <div className="relative h-full overflow-hidden rounded-2xl bg-white border border-[#eee8dc]">
+              <img
+                src="https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png"
+                alt="Pure Desi Ghee"
+                className="w-full h-full object-cover"
+              />
+              <span className="absolute bottom-2 right-2 bg-[#386b29] text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
+                Pure Desi Ghee
+              </span>
+            </div>
+          </div>
           {/* Subtle Organic Badge Overlay */}
-          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-[#386b29] border border-[#d6ebd1] shadow-xs flex items-center gap-1.5">
+          <div className="absolute -top-2 right-2 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-[#386b29] border border-[#d6ebd1] shadow-xs flex items-center gap-1.5 z-10">
             <span className="w-2 h-2 rounded-full bg-[#386b29]" />
-            100% FRESH
+            100% PURE & FRESH
           </div>
         </div>
       </div>

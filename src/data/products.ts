@@ -3,192 +3,263 @@ import { Product } from '../types';
 export const PRODUCTS: Product[] = [
   {
     id: '1',
-    name: 'Premium Flour (Fine Chakki)',
-    slug: 'premium-flour-fine-chakki',
+    name: 'Premium Desi Wheat Flour',
+    slug: 'premium-desi-wheat-flour',
     category: 'Flour & Atta',
     categorySlug: 'flour',
-    price: 1450,
-    originalPrice: 1650,
-    discountPercent: 12,
+    price: 1000,
+    originalPrice: 1150,
+    discountPercent: 13,
+    unitRate: 'Rs 200/Kg',
     rating: 4.9,
-    reviewsCount: 148,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+    reviewsCount: 142,
+    image: 'https://i.postimg.cc/RCYLNsGp/a89316cd-82f0-455e-8f90-4973a1a0a212.png',
     gallery: [
-      'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=800&q=80'
+      'https://i.postimg.cc/RCYLNsGp/a89316cd-82f0-455e-8f90-4973a1a0a212.png'
     ],
-    description: 'Freshly ground 100% pure wheat chakki flour with natural bran and nutrients intact for softest rotis.',
-    detailedDescription: 'Pure Harvest Premium Flour (Fine Chakki) is slow-milled from hand-selected, triple-cleaned premium Punjab wheat grains. It produces remarkably soft, aromatic, and puffy rotis packed with natural vitamins, minerals, and dietary fiber.\n\nContains zero preservatives, bleaching agents, or added maida.',
-    netWeight: '10 kg',
+    description:
+      'Sourced from select desi wheat grains and milled with care to preserve natural characteristics. 100% natural, fresh, and free from preservatives.',
+    detailedDescription:
+      'Pure Harvest Premium Desi Wheat Flour is positioned around quality, freshness, and careful processing. We source quality wheat and process it to preserve its natural nutrients and distinct aroma, making it the ideal flour for everyday family chapatis and rotis.',
+    netWeight: '5 kg / 10 kg',
     origin: 'Punjab, Pakistan',
     inStock: true,
+    stockStatus: 'Fresh Milled Daily',
     bestseller: true,
     isOrganic: true,
     benefits: [
-      '100% Traditional Chakki Fresh',
-      'Ultra Soft & Fluffy Rotis',
-      'Rich in Dietary Fiber',
-      'Zero Bleaching Agents & Maida',
-      'Naturally Preserved Bran',
-      'Retains Natural Wheat Aroma'
+      'Freshly milled from high quality Pakistani desi wheat',
+      'No chemical bleaching, additives, or synthetic preservatives',
+      'High natural fiber and nutrients for easy digestion',
+      'Produces exceptionally soft and fragrant rotis'
     ],
-    ingredients: '100% Premium Selected Whole Wheat Grains.',
-    howToUse: 'Knead with lukewarm water, let rest for 15 minutes, and cook on medium-high tawa for delicious rotis and parathas.',
-    tags: ['flour', 'chakki', 'atta', 'bestseller', 'wheat']
+    ingredients: '100% Whole Desi Wheat (Triticum aestivum)',
+    howToUse: 'Knead with lukewarm water and let rest for 15-20 minutes before rolling soft rotis, parathas, and puris.',
+    storageInstructions: 'Store in an airtight container in a cool, dry place away from direct sunlight.',
+    deliveryInfo: 'Fresh delivery available exclusively in Islamabad & Rawalpindi within 24-48 hours.',
+    shelfLife: '60 Days from Milling Date',
+    tags: ['Wheat Flour', 'Desi Atta', 'Fresh Chakki', 'Islamabad', 'Rawalpindi'],
+    variants: [
+      { size: '5 kg', price: 1000, originalPrice: 1150 },
+      { size: '10 kg', price: 2000, originalPrice: 2300 }
+    ]
   },
   {
     id: '2',
-    name: 'Premium Daal (Organic Washed)',
-    slug: 'premium-daal-organic-washed',
-    category: 'Grains & Pulses',
-    categorySlug: 'pulses',
-    price: 780,
-    originalPrice: 890,
-    discountPercent: 12,
-    rating: 4.8,
-    reviewsCount: 92,
-    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-    gallery: [
-      'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80'
-    ],
-    description: 'Triple-cleaned, unpolished organic washed lentils loaded with plant protein, natural aroma, and rich taste.',
-    detailedDescription: 'Sourced directly from organic certified farms, our Premium Daal is washed, dried under clean conditions, and unpolished to retain natural nutrients, texture, and authentic culinary flavour.\n\nQuick to cook with authentic homemade aroma.',
-    netWeight: '1 kg',
-    origin: 'Organic Farms, Pakistan',
-    inStock: true,
-    bestseller: true,
-    isOrganic: true,
-    benefits: [
-      'High Plant Protein & Iron',
-      'Triple-Cleaned & Washed',
-      '100% Unpolished & Natural',
-      'Easy to Digest & Light',
-      'Rich Authentic Taste & Aroma',
-      'Zero Artificial Polish or Colors'
-    ],
-    ingredients: '100% Organic Washed Pulses (Triple Cleaned).',
-    howToUse: 'Rinse gently, boil with turmeric and salt until tender, and temper with desi ghee, cumin, and garlic tarka.',
-    tags: ['daal', 'pulses', 'organic', 'protein', 'lentils']
-  },
-  {
-    id: '3',
-    name: 'Stone Ground Atta (Whole Grain)',
-    slug: 'stone-ground-atta-whole-grain',
+    name: 'Desi White Wheat Flour',
+    slug: 'desi-white-wheat-flour',
     category: 'Flour & Atta',
     categorySlug: 'flour',
-    price: 1550,
-    originalPrice: 1750,
-    discountPercent: 11,
-    rating: 5.0,
-    reviewsCount: 176,
-    image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
-    gallery: [
-      'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=800&q=80'
-    ],
-    description: 'Cold stone-milled whole grain wheat flour with complete germ, bran, and endosperm for wholesome nutrition.',
-    detailedDescription: 'Ground on traditional stone mills at low RPM to ensure that heat does not destroy the delicate vitamins, minerals, and enzymes present in the wheat germ. Perfect for diabetics and health-conscious families.',
-    netWeight: '10 kg',
-    origin: 'Punjab, Pakistan',
-    inStock: true,
-    bestseller: true,
-    isOrganic: true,
-    benefits: [
-      'Low Heat Cold Stone Milled',
-      'Full Wheat Germ & High Fiber',
-      'Low Glycemic Index (GI)',
-      'Aids Healthy Digestion & Gut',
-      '100% Unadulterated & Pure',
-      'No Additives or Preservatives'
-    ],
-    ingredients: '100% Certified Whole Grain Wheat (Pesticide-Free).',
-    howToUse: 'Knead gently with warm water, let rest for 20 minutes for maximum tenderness and digestive ease.',
-    tags: ['stoneground', 'wholegrain', 'atta', 'fiber', 'healthy']
-  },
-  {
-    id: '4',
-    name: 'Dessi Ghee',
-    slug: 'dessi-ghee',
-    category: 'Organic Ghee & Dairy',
-    categorySlug: 'ghee',
-    price: 2850,
-    originalPrice: 3200,
-    discountPercent: 11,
-    rating: 5.0,
-    reviewsCount: 215,
-    image: 'https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?auto=format&fit=crop&w=800&q=80',
-    gallery: [
-      'https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=800&q=80'
-    ],
-    description: 'Traditional slow-cooked bilona clarified butter with rich granular (danedar) texture and unforgettable aroma.',
-    detailedDescription: 'Prepared using traditional slow-cooking methods from fresh grass-fed farm milk. Our Dessi Ghee is rich in fat-soluble vitamins (A, D, E, K), butyric acid for gut health, and aromatic golden goodness that elevates every Pakistani dish.',
-    netWeight: '1 kg (1000ml)',
-    origin: 'Rural Farmsteads, Pakistan',
-    inStock: true,
-    bestseller: true,
-    isOrganic: true,
-    benefits: [
-      '100% Pure Grass-Fed Dairy',
-      'Traditional Danedar Texture',
-      'Rich in Butyric Acid & Omega-3',
-      'High Smoke Point for Cooking',
-      'Boosts Immunity & Energy',
-      'Zero Palm Oil or Chemicals'
-    ],
-    ingredients: '100% Pure Clarified Butter (Desi Makhan).',
-    howToUse: 'Drizzle over hot rotis, use for authentic tarka, cook rich curries, or enjoy with warm milk and halwa.',
-    tags: ['ghee', 'dessi-ghee', 'danedar', 'dairy', 'organic', 'bestseller']
-  },
-  {
-    id: '5',
-    name: 'Premium White Wheat Flour',
-    slug: 'premium-white-wheat-flour',
-    category: 'Flour & Atta',
-    categorySlug: 'flour',
-    price: 1350,
-    originalPrice: 1500,
-    discountPercent: 10,
+    price: 900,
+    originalPrice: 1050,
+    discountPercent: 14,
+    unitRate: 'Rs 180/Kg',
     rating: 4.8,
-    reviewsCount: 64,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+    reviewsCount: 98,
+    image: 'https://i.postimg.cc/NM5bzWpX/5d898bb8-3a3b-48e3-b4e1-ea9d498d174b.png',
     gallery: [
-      'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=800&q=80'
+      'https://i.postimg.cc/NM5bzWpX/5d898bb8-3a3b-48e3-b4e1-ea9d498d174b.png'
     ],
-    description: 'Superfine, silky white wheat flour specially ground for fluffy naans, puris, parathas, and light baking.',
-    detailedDescription: 'Selected from golden white wheat grain varieties and sifted to silky perfection without using harmful chemical bleaches or artificial additives. Ideal for traditional flatbreads, crispy parathas, and bakery creations.',
-    netWeight: '10 kg',
+    description:
+      'Fine desi white wheat flour milled gently for light, fluffy, and tender rotis. Free from chemical bleaches.',
+    detailedDescription:
+      'Desi White Wheat Flour provides a lighter texture without sacrificing the natural purity of wholesome wheat. Carefully processed to give you soft rotis and puris that stay fresh longer.',
+    netWeight: '5 kg / 10 kg',
     origin: 'Punjab, Pakistan',
     inStock: true,
+    stockStatus: 'In Stock',
     bestseller: false,
     isOrganic: true,
     benefits: [
-      'Naturally Milled White Wheat',
-      'Chemical-Free & Unbleached',
-      'Ideal for Naan, Puri & Baking',
-      'Silky Smooth Texture',
-      'Crispy & Flaky Parathas',
-      'Fresh Batch Guaranteed'
+      'Naturally light texture without chemical processing',
+      'Makes extra soft, light, and delicious chapatis',
+      'Carefully sifted and cleaned before packaging',
+      'Zero maida adulteration'
     ],
-    ingredients: '100% Fine Milled White Wheat Grains (Unbleached).',
-    howToUse: 'Perfect for dough making, baking organic flatbreads, samosa sheets, and light pastries.',
-    tags: ['whiteflour', 'atta', 'wheat', 'baking', 'flour']
+    ingredients: '100% Desi White Wheat',
+    howToUse: 'Perfect for light daily rotis, delicate naan, and homestyle bakery snacks.',
+    storageInstructions: 'Keep in a tightly closed container in a dry, well-ventilated area.',
+    deliveryInfo: 'Fresh delivery available in Islamabad & Rawalpindi.',
+    shelfLife: '60 Days from Milling Date',
+    tags: ['White Wheat', 'Soft Roti', 'Atta', 'Islamabad Delivery'],
+    variants: [
+      { size: '5 kg', price: 900, originalPrice: 1050 },
+      { size: '10 kg', price: 1800, originalPrice: 2100 }
+    ]
+  },
+  {
+    id: '3',
+    name: 'Stone Grounded Wheat Flour',
+    slug: 'stone-grounded-wheat-flour',
+    category: 'Flour & Atta',
+    categorySlug: 'flour',
+    price: 1150,
+    originalPrice: 1300,
+    discountPercent: 12,
+    unitRate: 'Rs 230/Kg',
+    rating: 4.95,
+    reviewsCount: 176,
+    image: 'https://i.postimg.cc/RF6QRwZh/1bdf141f-fb57-4248-a592-a1910a5c7b4a.png',
+    gallery: [
+      'https://i.postimg.cc/RF6QRwZh/1bdf141f-fb57-4248-a592-a1910a5c7b4a.png'
+    ],
+    description:
+      'Authentic low-RPM stone-ground wheat flour. Preserves germ, natural bran, vitamins, and minerals for traditional health.',
+    detailedDescription:
+      'Stone-ground wheat flour is produced by grinding whole wheat using stone milling methods rather than conventional high-speed industrial rollers. This traditional processing helps retain the grain’s natural fiber, germ, and sweet earthy flavor.',
+    netWeight: '5 kg / 10 kg',
+    origin: 'Rawalpindi / Islamabad Region',
+    inStock: true,
+    stockStatus: 'Fresh Milled Daily',
+    bestseller: true,
+    isOrganic: true,
+    benefits: [
+      'Traditional stone milling preserves wheat germ & oils',
+      'Low glycemic response and rich in natural dietary fiber',
+      'Authentic aroma and golden color',
+      '100% natural, unbleached, and unadulterated'
+    ],
+    ingredients: '100% Stone-Ground Whole Wheat',
+    howToUse: 'Use warm water to knead. Rest for 20 minutes for maximum tenderness and fluffiness.',
+    storageInstructions: 'Store in a cool, dry place in an airtight box.',
+    deliveryInfo: 'Fast doorstep delivery across Islamabad and Rawalpindi.',
+    shelfLife: '60 Days',
+    tags: ['Stone Ground', 'Chakki Atta', 'Organic', 'Health', 'Pure Harvest'],
+    variants: [
+      { size: '5 kg', price: 1150, originalPrice: 1300 },
+      { size: '10 kg', price: 2300, originalPrice: 2600 }
+    ]
+  },
+  {
+    id: '4',
+    name: 'Brown & White Mixed Wheat Flour',
+    slug: 'brown-white-mixed-wheat-flour',
+    category: 'Flour & Atta',
+    categorySlug: 'flour',
+    price: 950,
+    originalPrice: 1100,
+    discountPercent: 14,
+    unitRate: 'Rs 190/Kg',
+    rating: 4.85,
+    reviewsCount: 84,
+    image: 'https://i.postimg.cc/Qxb5cfJR/7a0e5c1d-1d96-4c7a-9247-739876624f49.png',
+    gallery: [
+      'https://i.postimg.cc/Qxb5cfJR/7a0e5c1d-1d96-4c7a-9247-739876624f49.png'
+    ],
+    description:
+      'Harmonious balance of wholesome brown wheat bran and soft white wheat. The ideal combination of health and soft texture.',
+    detailedDescription:
+      'Our Brown & White Mixed Wheat Flour combines the rich dietary fiber of brown wheat with the softness of white wheat. It provides the perfect balance for families wanting nutritious, fiber-rich rotis that remain soft and easy to roll.',
+    netWeight: '5 kg / 10 kg',
+    origin: 'Punjab, Pakistan',
+    inStock: true,
+    stockStatus: 'In Stock',
+    bestseller: false,
+    isOrganic: true,
+    benefits: [
+      'Balanced blend of fiber-rich brown bran and soft white grain',
+      'Ideal for children and elders needing easy-to-chew nutritious rotis',
+      'Naturally stone-milled without chemical additives',
+      'Delicious homestyle taste and golden brown color'
+    ],
+    ingredients: 'Blend of Whole Brown Wheat & Desi White Wheat',
+    howToUse: 'Knead with water and a pinch of salt if desired. Yields soft, wholesome chapatis.',
+    storageInstructions: 'Keep in an airtight container in a cool, ventilated pantry.',
+    deliveryInfo: 'Delivered in Islamabad and Rawalpindi.',
+    shelfLife: '60 Days',
+    tags: ['Mixed Flour', 'Brown Wheat', 'White Wheat', 'Fiber Rich'],
+    variants: [
+      { size: '5 kg', price: 950, originalPrice: 1100 },
+      { size: '10 kg', price: 1900, originalPrice: 2200 }
+    ]
+  },
+  {
+    id: '5',
+    name: 'Premium Multigrain Flour',
+    slug: 'premium-multigrain-flour',
+    category: 'Flour & Atta',
+    categorySlug: 'flour',
+    price: 2000,
+    originalPrice: 2300,
+    discountPercent: 13,
+    unitRate: 'Rs 400/Kg',
+    rating: 4.92,
+    reviewsCount: 115,
+    image: 'https://i.postimg.cc/wMWqjRDQ/5aa349e1-265e-4016-96cc-d57c412bcd98.png',
+    gallery: [
+      'https://i.postimg.cc/wMWqjRDQ/5aa349e1-265e-4016-96cc-d57c412bcd98.png'
+    ],
+    description:
+      'Superfood multigrain blend of whole wheat, barley (jau), black chana, oats, and millets for sustained energy and health.',
+    detailedDescription:
+      'Multigrain flour is made using a wholesome combination of different grains to provide a more varied nutritional profile and flavor compared with conventional wheat flour. Pure Harvest Multigrain Flour is designed for health-conscious individuals and families seeking a premium alternative for everyday baking and cooking.',
+    netWeight: '5 kg / 10 kg',
+    origin: 'Pakistan',
+    inStock: true,
+    stockStatus: 'Fresh Milled Daily',
+    bestseller: true,
+    isOrganic: true,
+    benefits: [
+      'Rich in complex carbohydrates, plant proteins, and dietary fiber',
+      'Helps maintain steady energy levels and supports weight management',
+      'Nutrient blend of Wheat, Barley (Jau), Roasted Gram (Chana), Oats, and Millets',
+      'Distinctive nutty flavor and wholesome aroma'
+    ],
+    ingredients: 'Whole Wheat, Barley (Jau), Roasted Gram (Chana), Whole Oats, Millets',
+    howToUse: 'Use warm water to knead. Rest dough for 20 minutes before making healthy rotis or multigrain breads.',
+    storageInstructions: 'Store in an airtight container in a cool dry area away from heat.',
+    deliveryInfo: 'Doorstep delivery across Islamabad & Rawalpindi.',
+    shelfLife: '60 Days',
+    tags: ['Multigrain', 'Superfood', 'Barley', 'High Protein', 'Diet Friendly'],
+    variants: [
+      { size: '5 kg', price: 2000, originalPrice: 2300 },
+      { size: '10 kg', price: 4000, originalPrice: 4600 }
+    ]
+  },
+  {
+    id: '6',
+    name: 'Premium Desi Ghee',
+    slug: 'premium-desi-ghee',
+    category: 'Organic Desi Ghee',
+    categorySlug: 'ghee',
+    price: 1000,
+    originalPrice: 1200,
+    discountPercent: 17,
+    unitRate: 'Rs 4000/Kg',
+    rating: 4.98,
+    reviewsCount: 210,
+    image: 'https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png',
+    gallery: [
+      'https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png'
+    ],
+    description:
+      'Pure traditional Desi Ghee prepared with focus on quality and purity. Rich golden aroma and grainy texture.',
+    detailedDescription:
+      'Pure Harvest Desi Ghee is positioned as a premium Desi Ghee product, sourced and prepared with a focus on quality and purity. We provide customers with authentic-tasting Desi Ghee suitable for traditional Pakistani cooking, baking, halwas, and everyday healthy living.',
+    netWeight: '250 gm / 500 gm / 1 kg',
+    origin: 'Punjab, Pakistan',
+    inStock: true,
+    stockStatus: 'Pure & Fresh Batch',
+    bestseller: true,
+    isOrganic: true,
+    benefits: [
+      '100% pure Desi Ghee with authentic granular (danedar) texture',
+      'Rich in fat-soluble vitamins A, D, E, and healthy butyric acid',
+      'Traditional aroma that enhances every Pakistani dish and paratha',
+      'Free from hydrogenated oils, palm oil, artificial colors, and preservatives'
+    ],
+    ingredients: '100% Pure Milk Fat (Desi Ghee)',
+    howToUse: 'Drizzle over hot rotis, use for tadka, frying parathas, and making traditional sweet delicacies.',
+    storageInstructions: 'Store in a cool, dry place. No refrigeration required. Use a dry spoon.',
+    deliveryInfo: 'Delivered in glass/food-grade jars across Islamabad & Rawalpindi.',
+    shelfLife: '9 Months from Packing Date',
+    tags: ['Desi Ghee', 'Pure Ghee', 'Danedar', 'Traditional', 'Islamabad'],
+    variants: [
+      { size: '250 gm', price: 1000, originalPrice: 1200 },
+      { size: '500 gm', price: 2000, originalPrice: 2400 },
+      { size: '1 kg', price: 4000, originalPrice: 4800 }
+    ]
   }
 ];
 
-export const INITIAL_CART_ITEMS = [
-  {
-    product: PRODUCTS[0], // Premium Flour (Fine Chakki)
-    quantity: 1
-  },
-  {
-    product: PRODUCTS[3], // Dessi Ghee
-    quantity: 1
-  }
-];
+export const BESTSELLER_PRODUCTS = PRODUCTS.filter((p) => p.bestseller);

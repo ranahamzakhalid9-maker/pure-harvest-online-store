@@ -92,15 +92,15 @@ export default function HeroProductScene() {
           
           {/* 1. Whole Grain Wheat Bag / Sack (Center-Left Back) */}
           <div
-            className="absolute bottom-[22%] left-[16%] w-[38%] aspect-square z-12 transition-transform duration-300 ease-out"
+            className="absolute bottom-[22%] left-[14%] w-[42%] aspect-square z-12 transition-transform duration-300 ease-out"
             style={{
               transform: `translate(${mousePos.x * 6}px, ${mousePos.y * 6}px)`
             }}
           >
             <div className="relative w-full h-full">
               <img
-                src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=85"
-                alt="Stone Ground Whole Wheat Grain"
+                src="https://i.postimg.cc/RF6QRwZh/1bdf141f-fb57-4248-a592-a1910a5c7b4a.png"
+                alt="Stone Grounded Wheat Flour"
                 className="w-full h-full object-cover rounded-3xl filter drop-shadow-[0_14px_18px_rgba(0,0,0,0.18)] border-2 border-white/60"
               />
               <span className="absolute bottom-2 left-2 bg-[#182a17]/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
@@ -109,40 +109,40 @@ export default function HeroProductScene() {
             </div>
           </div>
 
-          {/* 2. Pure Dessi Ghee Jar (Center-Right Back) */}
+          {/* 2. Pure Desi Ghee Jar (Center-Right Back) */}
           <div
-            className="absolute bottom-[24%] right-[18%] w-[32%] aspect-square z-14 transition-transform duration-300 ease-out"
+            className="absolute bottom-[24%] right-[14%] w-[36%] aspect-square z-14 transition-transform duration-300 ease-out"
             style={{
               transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)`
             }}
           >
             <div className="relative w-full h-full">
               <img
-                src="https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?auto=format&fit=crop&w=600&q=85"
-                alt="Pure Danedar Dessi Ghee"
+                src="https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png"
+                alt="Pure Premium Desi Ghee"
                 className="w-full h-full object-cover rounded-3xl filter drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] border-2 border-white/60"
               />
               <span className="absolute bottom-2 right-2 bg-[#386b29] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                100% Dessi Ghee
+                100% Desi Ghee
               </span>
             </div>
           </div>
 
-          {/* 3. Organic Washed Daal / Pulses (Center Foreground) */}
+          {/* 3. Premium Multigrain Flour (Center Foreground) */}
           <div
-            className="absolute bottom-[14%] left-[32%] w-[36%] aspect-square z-20 transition-transform duration-200 ease-out"
+            className="absolute bottom-[12%] left-[30%] w-[40%] aspect-square z-20 transition-transform duration-200 ease-out"
             style={{
               transform: `translate(${mousePos.x * 16}px, ${mousePos.y * 16}px)`
             }}
           >
             <div className="relative w-full h-full">
               <img
-                src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=85"
-                alt="Premium Organic Washed Daal"
+                src="https://i.postimg.cc/wMWqjRDQ/5aa349e1-265e-4016-96cc-d57c412bcd98.png"
+                alt="Premium Multigrain Flour"
                 className="w-full h-full object-cover rounded-3xl filter drop-shadow-[0_14px_18px_rgba(0,0,0,0.28)] border-2 border-white"
               />
               <span className="absolute bottom-2 left-2 bg-[#dfa52b] text-[#182a17] text-[10px] font-black px-2 py-0.5 rounded-md shadow-xs">
-                Organic Daal
+                Multigrain Atta
               </span>
             </div>
           </div>

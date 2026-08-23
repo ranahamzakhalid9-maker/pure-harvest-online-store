@@ -1,8 +1,8 @@
 import { CartItem, Product, ShippingInfo } from '../types';
 
-export const WHATSAPP_NUMBER = '923094083549';
-export const WHATSAPP_DISPLAY_NUMBER = '03094083549';
-export const WHATSAPP_INTL_NUMBER = '+92 309 4083549';
+export const WHATSAPP_NUMBER = '923065568146';
+export const WHATSAPP_DISPLAY_NUMBER = '03065568146';
+export const WHATSAPP_INTL_NUMBER = '+92 306 5568146';
 
 export interface OrderDetailsForWhatsApp {
   orderId: string;

@@ -98,10 +98,10 @@ export default function CategoriesPage({ onNavigate, onSelectCategory }: Categor
                 Get 100% organic products delivered fresh to your door.
               </p>
 
-              <div className="my-4 relative w-full h-24 rounded-2xl overflow-hidden shadow-xs">
+              <div className="my-4 relative w-full h-24 rounded-2xl overflow-hidden shadow-xs bg-white border border-[#cbe4c4]">
                 <img
-                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80"
-                  alt="Healthy Organic Harvest"
+                  src="https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png"
+                  alt="Pure Desi Ghee & Chakki Flour"
                   className="w-full h-full object-cover"
                 />
               </div>

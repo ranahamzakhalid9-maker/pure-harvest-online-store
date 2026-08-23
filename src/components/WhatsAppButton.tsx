@@ -26,10 +26,10 @@ export default function WhatsAppButton() {
           </button>
           <div className="flex items-center gap-1.5 text-[#386b29] font-bold mb-1">
             <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-            <span>Order on WhatsApp</span>
+            <span>Contact via WhatsApp</span>
           </div>
           <p className="text-[11px] text-[#4d5f4c] leading-tight">
-            Chat with us directly or order instantly on <span className="font-semibold text-[#182a17]">{WHATSAPP_DISPLAY_NUMBER}</span>.
+            Chat with us directly or inquire on <span className="font-semibold text-[#182a17]">{WHATSAPP_DISPLAY_NUMBER}</span>.
           </p>
         </div>
       )}
@@ -37,13 +37,13 @@ export default function WhatsAppButton() {
       <button
         onClick={handleClick}
         className="group flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-3 rounded-full shadow-[0_6px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.5)] transition-all duration-300 transform hover:scale-105 active:scale-95"
-        aria-label="Order on WhatsApp 03094083549"
-        title="Chat on WhatsApp (03094083549)"
+        aria-label={`Contact via WhatsApp ${WHATSAPP_DISPLAY_NUMBER}`}
+        title={`Chat on WhatsApp (${WHATSAPP_DISPLAY_NUMBER})`}
       >
         {/* WhatsApp Icon */}
         <MessageCircle className="w-6 h-6 fill-current stroke-none" />
         <span className="font-bold text-xs sm:text-sm tracking-wide pr-1">
-          WhatsApp Order ({WHATSAPP_DISPLAY_NUMBER})
+          Contact via WhatsApp ({WHATSAPP_DISPLAY_NUMBER})
         </span>
       </button>
     </div>

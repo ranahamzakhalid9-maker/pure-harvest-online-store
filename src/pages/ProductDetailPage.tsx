@@ -48,10 +48,27 @@ export default function ProductDetailPage({
   isWishlisted
 }: ProductDetailPageProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'benefits' | 'ingredients' | 'how-to-use' | 'reviews'>('description');
   const [copiedLink, setCopiedLink] = useState(false);
   const [addedToast, setAddedToast] = useState(false);
+
+  const currentVariant = product.variants && product.variants.length > 0
+    ? product.variants[selectedVariantIndex] || product.variants[0]
+    : null;
+
+  const currentPrice = currentVariant ? currentVariant.price : product.price;
+  const currentOriginalPrice = currentVariant ? currentVariant.originalPrice : product.originalPrice;
+  const currentNetWeight = currentVariant ? currentVariant.size : product.netWeight;
+
+  const effectiveProduct: Product = {
+    ...product,
+    price: currentPrice,
+    originalPrice: currentOriginalPrice,
+    netWeight: currentNetWeight,
+    name: currentVariant ? `${product.name} (${currentVariant.size})` : product.name
+  };
 
   const images = product.gallery && product.gallery.length > 0
     ? product.gallery
@@ -66,13 +83,13 @@ export default function ProductDetailPage({
   };
 
   const handleAdd = () => {
-    onAddToCart(product, quantity);
+    onAddToCart(effectiveProduct, quantity);
     setAddedToast(true);
     setTimeout(() => setAddedToast(false), 2000);
   };
 
   const handleOrderOnWhatsApp = () => {
-    const message = generateProductWhatsAppMessage(product, quantity);
+    const message = generateProductWhatsAppMessage(effectiveProduct, quantity);
     openWhatsAppChat(message);
   };
 
@@ -198,21 +215,62 @@ export default function ProductDetailPage({
             </div>
 
             {/* Pricing */}
-            <div className="flex items-baseline gap-3 pt-1">
+            <div className="flex items-baseline gap-3 pt-1 flex-wrap">
               <span className="font-serif text-3xl font-extrabold text-[#386b29]">
-                Rs. {product.price.toLocaleString()}
+                Rs. {currentPrice.toLocaleString()}
               </span>
-              {product.originalPrice && (
+              {currentOriginalPrice && (
                 <span className="text-base text-[#92a290] line-through">
-                  Rs. {product.originalPrice.toLocaleString()}
+                  Rs. {currentOriginalPrice.toLocaleString()}
+                </span>
+              )}
+              {product.unitRate && (
+                <span className="bg-[#eef6ec] text-[#2e5d20] text-xs font-bold px-3 py-1 rounded-full border border-[#cbe4c6]">
+                  {product.unitRate}
                 </span>
               )}
               {product.discountPercent && (
-                <span className="bg-[#eef6ec] text-[#386b29] text-xs font-bold px-2.5 py-1 rounded-md border border-[#cbe4c6]">
+                <span className="bg-[#fff4e5] text-[#b36b00] text-xs font-bold px-2.5 py-1 rounded-md border border-[#fed7aa]">
                   {product.discountPercent}% OFF
                 </span>
               )}
             </div>
+
+            {/* Size / Variant Selector */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#495b47] uppercase tracking-wider">
+                    Select Pack Size / Weight:
+                  </span>
+                  <span className="text-xs font-semibold text-[#386b29]">
+                    {currentNetWeight}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  {product.variants.map((variant, idx) => {
+                    const isSelected = selectedVariantIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setSelectedVariantIndex(idx)}
+                        className={`px-4 py-2.5 rounded-2xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-2 ${
+                          isSelected
+                            ? 'bg-[#386b29] text-white border-[#386b29] shadow-sm scale-102'
+                            : 'bg-[#fbf9f4] text-[#2f422e] border-[#e2d9cd] hover:border-[#386b29]'
+                        }`}
+                      >
+                        <span>{variant.size}</span>
+                        <span className={`text-[11px] font-semibold ${isSelected ? 'text-[#cbe8c4]' : 'text-[#6f826d]'}`}>
+                          • Rs. {variant.price.toLocaleString()}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Short Description */}
             <p className="text-sm text-[#4d5e4b] leading-relaxed">
@@ -238,25 +296,49 @@ export default function ProductDetailPage({
               ))}
             </div>
 
-            {/* Product Information Card: Net Weight & Origin */}
-            <div className="bg-white rounded-2xl p-4 border border-[#eee7d8] shadow-[0_2px_12px_rgba(0,0,0,0.02)] grid grid-cols-2 gap-4 divide-x divide-[#f0ece1]">
-              <div>
-                <span className="block text-[11px] font-semibold text-[#839381] uppercase tracking-wider">
+            {/* Product Information Card: Net Weight, Origin, Shelf Life, Delivery */}
+            <div className="bg-white rounded-2xl p-4 border border-[#eee7d8] shadow-[0_2px_12px_rgba(0,0,0,0.02)] grid grid-cols-2 sm:grid-cols-4 gap-3 divide-y sm:divide-y-0 sm:divide-x divide-[#f0ece1]">
+              <div className="pt-2 sm:pt-0">
+                <span className="block text-[10px] font-semibold text-[#839381] uppercase tracking-wider">
                   Net Weight
                 </span>
-                <span className="font-bold text-sm text-[#182a17] mt-0.5 block">
-                  {product.netWeight}
+                <span className="font-bold text-xs sm:text-sm text-[#182a17] mt-0.5 block">
+                  {currentNetWeight}
                 </span>
               </div>
-              <div className="pl-4">
-                <span className="block text-[11px] font-semibold text-[#839381] uppercase tracking-wider">
+              <div className="pt-2 sm:pt-0 sm:pl-3">
+                <span className="block text-[10px] font-semibold text-[#839381] uppercase tracking-wider">
                   Origin
                 </span>
-                <span className="font-bold text-sm text-[#182a17] mt-0.5 block">
-                  {product.origin}
+                <span className="font-bold text-xs sm:text-sm text-[#182a17] mt-0.5 block">
+                  {product.origin || 'Punjab, Pakistan'}
+                </span>
+              </div>
+              <div className="pt-2 sm:pt-0 sm:pl-3">
+                <span className="block text-[10px] font-semibold text-[#839381] uppercase tracking-wider">
+                  Shelf Life
+                </span>
+                <span className="font-bold text-xs sm:text-sm text-[#182a17] mt-0.5 block">
+                  {product.shelfLife || '3 Months'}
+                </span>
+              </div>
+              <div className="pt-2 sm:pt-0 sm:pl-3">
+                <span className="block text-[10px] font-semibold text-[#839381] uppercase tracking-wider">
+                  Delivery
+                </span>
+                <span className="font-bold text-xs sm:text-sm text-[#386b29] mt-0.5 block">
+                  Islamabad & Pindi
                 </span>
               </div>
             </div>
+
+            {/* Storage Advice */}
+            {product.storageInstructions && (
+              <div className="p-3 rounded-xl bg-[#f7f5ee] border border-[#e8e2d4] text-xs text-[#526550] flex items-center gap-2">
+                <span className="font-bold text-[#182a17]">Storage Tip:</span>
+                <span>{product.storageInstructions}</span>
+              </div>
+            )}
           </div>
 
           {/* Part 3: Purchase Panel (3 cols) */}
@@ -303,7 +385,7 @@ export default function ProductDetailPage({
                 </button>
 
                 <button
-                  onClick={() => onBuyNow(product, quantity)}
+                  onClick={() => onBuyNow(effectiveProduct, quantity)}
                   className="w-full py-3 px-4 rounded-2xl bg-white hover:bg-[#fbf9f4] text-[#386b29] font-bold text-sm border-2 border-[#386b29] flex items-center justify-center gap-2 transition-all active:scale-98"
                 >
                   <span>BUY NOW</span>
@@ -312,10 +394,10 @@ export default function ProductDetailPage({
                 <button
                   onClick={handleOrderOnWhatsApp}
                   className="w-full py-3 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(37,211,102,0.3)] hover:shadow-lg transition-all active:scale-98"
-                  title="Quick order via WhatsApp 03094083549"
+                  title={`Contact via WhatsApp ${WHATSAPP_DISPLAY_NUMBER}`}
                 >
                   <MessageCircle className="w-4 h-4 fill-current stroke-none" />
-                  <span>ORDER ON WHATSAPP ({WHATSAPP_DISPLAY_NUMBER})</span>
+                  <span>CONTACT VIA WHATSAPP ({WHATSAPP_DISPLAY_NUMBER})</span>
                 </button>
               </div>
 

@@ -5,38 +5,28 @@ export const CATEGORIES: Category[] = [
     id: 'flour',
     name: 'Flour & Atta',
     slug: 'flour',
-    count: 3,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-    description: 'Chakki fresh, stone-ground, and whole grain wheat flours with natural bran & rich wheat aroma.'
-  },
-  {
-    id: 'pulses',
-    name: 'Grains & Pulses',
-    slug: 'pulses',
-    count: 1,
-    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
-    description: 'Organically grown, washed and unpolished lentils, grains, and protein-rich pulses.'
+    count: 5,
+    image: 'https://i.postimg.cc/RF6QRwZh/1bdf141f-fb57-4248-a592-a1910a5c7b4a.png',
+    description: 'Chakki fresh, stone-ground, desi white, brown-white mixed, and multigrain flours with natural bran & rich aroma.'
   },
   {
     id: 'ghee',
-    name: 'Organic Ghee & Dairy',
+    name: 'Organic Desi Ghee',
     slug: 'ghee',
     count: 1,
-    image: 'https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?auto=format&fit=crop&w=800&q=80',
-    description: '100% pure traditional bilona danedar desi ghee prepared from grass-fed farm dairy.'
+    image: 'https://i.postimg.cc/02xX8HNh/33a473c0-69f6-4a1e-9754-60208cded94a.png',
+    description: '100% pure traditional danedar Desi Ghee prepared from quality milk with rich aroma and golden texture.'
   }
 ];
 
 export const SIDEBAR_CATEGORIES = [
-  { name: 'All Products', count: 5, slug: 'all', icon: 'LayoutGrid' },
-  { name: 'Flour & Atta', count: 3, slug: 'flour', icon: 'Wheat' },
-  { name: 'Grains & Pulses', count: 1, slug: 'pulses', icon: 'Sprout' },
-  { name: 'Desi Ghee', count: 1, slug: 'ghee', icon: 'Droplets' }
+  { name: 'All Products', count: 6, slug: 'all', icon: 'LayoutGrid' },
+  { name: 'Flour & Atta', count: 5, slug: 'flour', icon: 'Wheat' },
+  { name: 'Organic Desi Ghee', count: 1, slug: 'ghee', icon: 'Droplets' }
 ];
 
 export const FULL_SIDEBAR_CATEGORIES = [
-  { name: 'All Products', count: 5, slug: 'all' },
-  { name: 'Flour & Atta', count: 3, slug: 'flour' },
-  { name: 'Grains & Pulses', count: 1, slug: 'pulses' },
-  { name: 'Organic Ghee & Dairy', count: 1, slug: 'ghee' }
+  { name: 'All Products', count: 6, slug: 'all' },
+  { name: 'Flour & Atta', count: 5, slug: 'flour' },
+  { name: 'Organic Desi Ghee', count: 1, slug: 'ghee' }
 ];

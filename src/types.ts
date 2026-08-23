@@ -1,3 +1,9 @@
+export interface ProductVariant {
+  size: string;
+  price: number;
+  originalPrice?: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -7,6 +13,7 @@ export interface Product {
   price: number;
   originalPrice?: number;
   discountPercent?: number;
+  unitRate?: string;
   rating: number;
   reviewsCount: number;
   image: string;
@@ -16,12 +23,17 @@ export interface Product {
   netWeight: string;
   origin: string;
   inStock: boolean;
+  stockStatus?: string;
   bestseller?: boolean;
   isOrganic?: boolean;
   benefits?: string[];
   ingredients?: string;
   howToUse?: string;
+  storageInstructions?: string;
+  deliveryInfo?: string;
+  shelfLife?: string;
   tags?: string[];
+  variants?: ProductVariant[];
 }
 
 export interface CartItem {
